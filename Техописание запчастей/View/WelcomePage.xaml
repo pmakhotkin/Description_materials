@@ -1,0 +1,36 @@
+﻿<Page x:Class="Техописание_запчастей.View.WelcomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="WelcomePage">
+    <Page.DataContext>
+        <vm:WelcomePageViewModel/>
+    </Page.DataContext>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Column="0" BorderBrush="#94b4ff"  BorderThickness="0,0,1,0"></Border>
+        <DockPanel Grid.Column="0" LastChildFill="True" Margin="7">
+            <TextBlock Margin="8" 
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       DockPanel.Dock="Top"
+                       >Введите список запчастей по одной на строку :</TextBlock>
+            <Button x:Name="bCheck_Data" FontSize="14" Content="Проверить запчасти" Height="30" DockPanel.Dock="Bottom"></Button>
+            <TextBox x:Name="TextWaybill" 
+                     TextWrapping="Wrap"
+                AcceptsReturn="True"
+                HorizontalScrollBarVisibility="Disabled"
+                VerticalScrollBarVisibility="Auto"
+                     ></TextBox>
+        </DockPanel>
+        <Frame x:Name="ValidFrame" Grid.Column="1"
+            Content="{Binding ValidPage}"></Frame>
+    </Grid>
+</Page>
