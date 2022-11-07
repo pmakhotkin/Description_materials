@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-
-namespace Техописание_запчастей.Model
+﻿namespace Техописание_запчастей.Model
 {
     public partial class DeliveryContext : DbContext
     {
         public DeliveryContext()
         {
+            //Database.EnsureCreated();
         }
 
         public DeliveryContext(DbContextOptions<DeliveryContext> options)

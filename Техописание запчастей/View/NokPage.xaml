@@ -4,28 +4,22 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Техописание_запчастей.View"
+      xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NokPage"
-      Background="White"
-      >
-
+      Background="White">
+    <Page.DataContext>
+        <vm:WelcomePageViewModel></vm:WelcomePageViewModel>
+    </Page.DataContext>
     <Grid>
-        <StackPanel Orientation="Vertical" VerticalAlignment="Top"  HorizontalAlignment="Center">
-            <TextBlock Margin="5,5,0,0" HorizontalAlignment="Center">Запчасти требующие уточнения данных :</TextBlock>
-            <ListView x:Name="ListViewMaterial" Background="White" Margin="10">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Material"/>
-                        <GridViewColumn Header="Decription"/>
-                        <GridViewColumn Header="Decription Rus"/>
-                        <GridViewColumn Header="Unity"/>
-                        <GridViewColumn Header="Link photo"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <Button Margin="17" Width="250" Height="25">Создать техописания с этими данными</Button>
-
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <TextBlock Text="Запчасти с неполными данными" />
+            <DataGrid ItemsSource="{Binding NotValidSpareParts}" Margin="10"></DataGrid>
+            <TextBlock Text="Запчасти которых нет в базе" />
+            <ListBox ItemsSource="{Binding NotExistDBParts}" Margin="10"></ListBox>
+            <TextBlock Text="Запчасти с неверными ссылками на фото" />
+            <DataGrid ItemsSource="{Binding NotValidSpareParts}" Margin="10"></DataGrid>
         </StackPanel>
     </Grid>
 </Page>

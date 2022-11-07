@@ -12,5 +12,7 @@ namespace Техописание_запчастей.View
         {
             InitializeComponent();
         }
+
+
     }
 }

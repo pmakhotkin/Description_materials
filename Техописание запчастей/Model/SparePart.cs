@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Техописание_запчастей.Model
+﻿namespace Техописание_запчастей.Model
 {
     public partial class SparePart
     {

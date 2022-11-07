@@ -22,12 +22,13 @@
                        HorizontalAlignment="Center"
                        DockPanel.Dock="Top"
                        >Введите список запчастей по одной на строку :</TextBlock>
-            <Button x:Name="bCheck_Data" FontSize="14" Content="Проверить запчасти" Height="30" DockPanel.Dock="Bottom"></Button>
+            <Button x:Name="bCheck_Data" FontSize="14" Content="Проверить запчасти" Height="30" DockPanel.Dock="Bottom" Command="{Binding ValidationSpareParts}" ></Button>
             <TextBox x:Name="TextWaybill" 
                      TextWrapping="Wrap"
                 AcceptsReturn="True"
                 HorizontalScrollBarVisibility="Disabled"
                 VerticalScrollBarVisibility="Auto"
+                Text="{Binding Parts}"
                      ></TextBox>
         </DockPanel>
         <Frame x:Name="ValidFrame" Grid.Column="1"

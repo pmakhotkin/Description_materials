@@ -9,7 +9,6 @@
       Title="OkPage"
       Background="White"
       >
-      
     <Grid>
         <StackPanel Orientation="Vertical" VerticalAlignment="Center">
             <TextBlock Width="400" FontSize="14"> Все данные в порядке можно запускать обработку</TextBlock>
