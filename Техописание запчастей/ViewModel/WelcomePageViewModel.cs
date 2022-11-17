@@ -4,16 +4,6 @@
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         #region Properties
-        private Page validPage = new OkPage();
-        public Page ValidPage
-        {
-            set 
-            { 
-                validPage = value;
-                NotifyPropertyChanged("ValidPage");
-            }
-        }
-
         private string parts = String.Empty;
         public string? Parts
         {
@@ -50,7 +40,7 @@
         }
 
         private List<string>? notExistDBParts;
-        public List<string> NotExistDBParts
+        public List<string>? NotExistDBParts
         {
             get { return notExistDBParts; }
             set
@@ -59,6 +49,18 @@
                 NotifyPropertyChanged("NotExistDBParts");
             }
         }
+
+        private List<SparePart>? notExistPhotoFile;
+        public List<SparePart> NotExistPhotoFile
+        {
+            get { return notExistPhotoFile; }
+            set
+            {
+                notExistPhotoFile = value;
+                NotifyPropertyChanged("NotExistPhotoFile");
+            }
+        }
+
 
         #endregion
 
@@ -81,16 +83,24 @@
             AllSparePartsFromDB = Validator.GetSelectMaterial_by_name(sListPart);
             NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDB);
             NotExistDBParts = Validator.GetNotExistDBSpareParts(sListPart);
-            
-            if (!NotValidSpareParts.Any() && NotExistDBParts.Any())
-            {
-                ValidPage = new OkPage();
+            NotExistPhotoFile = Validator.GetSpare_NotExistPhotoFile(AllSparePartsFromDB);
 
-                
+            if (!AllSparePartsFromDB.Any())
+            {
+                MessageBox.Show("Проверьте ввод, по вашему запросу данных в базе нет");
+                return;
+            }
+
+            if (!NotValidSpareParts.Any() && !NotExistDBParts.Any())
+            {
+                OkWindows okWindows = new OkWindows();
+                okWindows.Show();
             }
             else
             {
-                ValidPage = new NokPage();
+                ValidationSpares();
+                NokWindows nokWindows  = new NokWindows();
+                nokWindows.Show();
             }
         }
         private List<string> GetInvoiceList()

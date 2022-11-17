@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Техописание_запчастей.View
 {
     /// <summary>
-    /// Interaction logic for NokPage.xaml
+    /// Interaction logic for OkWindows.xaml
     /// </summary>
-    public partial class NokPage : Page
+    public partial class OkWindows : Window
     {
-        public NokPage()
+        public OkWindows()
         {
             InitializeComponent();
         }

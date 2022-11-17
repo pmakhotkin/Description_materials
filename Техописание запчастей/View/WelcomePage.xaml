@@ -31,7 +31,5 @@
                 Text="{Binding Parts}"
                      ></TextBox>
         </DockPanel>
-        <Frame x:Name="ValidFrame" Grid.Column="1"
-            Content="{Binding ValidPage}"></Frame>
     </Grid>
 </Page>

@@ -1,15 +1,13 @@
 ﻿using Microsoft.Office.Interop.Word;
-using System.Data;
 using System.IO;
 using System.Threading;
-using DataTable = System.Data.DataTable;
 
 namespace Техописание_запчастей.Model
 {
     public static class WordDocument
     {
         private static object templateFile = Environment.CurrentDirectory + "\\Template_Description_Spare.docx";
-        private static Application word = new();
+        private static Microsoft.Office.Interop.Word.Application word = new();
         public static void CreateDescription(List<SparePart> spare_Parts)
         {
             try

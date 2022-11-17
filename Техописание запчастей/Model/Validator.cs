@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
+﻿
 
 namespace Техописание_запчастей.Model
 {
@@ -35,10 +30,20 @@ namespace Техописание_запчастей.Model
             return selectMaterial_by_name;
         }
 
-        //public static List<SparePart> GetSpare_NotExistPhotoFile()
-        //{
+        public static List<SparePart> GetSpare_NotExistPhotoFile(List<SparePart> ListLinkPhoto)
+        {
+            List<SparePart> notExistPhoto = new List<SparePart>();
 
-        //}
+            foreach (var Link in ListLinkPhoto)
+            {
+                if (!File.Exists(Link.Photo) && !String.IsNullOrEmpty(Link.Photo))
+                {
+                    notExistPhoto.Add(Link);
+                }
+            }
+
+            return notExistPhoto;
+        }
 
 
     }

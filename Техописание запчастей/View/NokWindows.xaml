@@ -1,0 +1,25 @@
+﻿<Window x:Class="Техописание_запчастей.View.NokWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Техописание_запчастей.View"
+        xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
+        mc:Ignorable="d"
+        Title="NokWindows" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:WelcomePageViewModel></vm:WelcomePageViewModel>
+    </Window.DataContext>
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Width="700">
+            <TextBlock Text="Запчасти с неполными данными" Width="180"/>
+            <DataGrid ItemsSource="{Binding NotValidSpareParts}" Margin="10" VerticalScrollBarVisibility="Auto" Height="100"></DataGrid>
+            <TextBlock Text="Запчасти которых нет в базе" Width="160"/>
+            <ListBox ItemsSource="{Binding NotExistDBParts}" Margin="10" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="50"></ListBox>
+            <TextBlock Text="Запчасти с неверными ссылками на фото" Width="235"/>
+            <DataGrid ItemsSource="{Binding NotExistPhotoFile}" Margin="10" VerticalScrollBarVisibility="Auto" Height="100"></DataGrid>
+            <Button Width="300" Content="Создать техописания с учетом исправлений"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

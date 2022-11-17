@@ -1,5 +1,8 @@
 ﻿global using System.ComponentModel;
+global using System.IO;
+global using System.Windows;
 global using Техописание_запчастей.Model;
+global using Техописание_запчастей.View;
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using Microsoft.EntityFrameworkCore;
@@ -12,7 +15,6 @@ global using System.Text;
 global using System.Threading.Tasks;
 global using System.Windows.Controls;
 global using System.Collections;
-global using Техописание_запчастей.View;
 global using wordApp = Microsoft.Office.Interop.Word;
 global using System.Text.RegularExpressions;
 global using Validator = Техописание_запчастей.Model.Validator;

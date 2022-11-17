@@ -1,0 +1,16 @@
+﻿<Window x:Class="Техописание_запчастей.View.OkWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Техописание_запчастей.View"
+        mc:Ignorable="d"
+        Title="OkWindows" Height="150" Width="400">
+    <Grid>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <TextBlock Width="340" FontSize="14" HorizontalAlignment="Center"> Все данные в порядке можно запускать обработку</TextBlock>
+            <Button Margin="17" Width="150" Height="25">Создать техописания</Button>
+        </StackPanel>
+
+    </Grid>
+</Window>
