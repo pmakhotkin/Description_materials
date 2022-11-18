@@ -1,8 +1,9 @@
-﻿namespace Техописание_запчастей.ViewModel
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace Техописание_запчастей.ViewModel
 {
-    class WelcomePageViewModel : INotifyPropertyChanged
+    class WelcomePageViewModel
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
         #region Properties
         private string parts = String.Empty;
         public string? Parts
@@ -10,57 +11,17 @@
             get { return parts; }
             set 
             {
-                if (value != null)
-                {
-                    parts = value;
-                    NotifyPropertyChanged("Parts");
-                }
+                //if (value != null)
+                //{
+                   parts = value;
+                //    NotifyPropertyChanged("Parts");
+                //}
             }
         }
-        private List<SparePart>? allSparePartsFromDB;
-        public List<SparePart> AllSparePartsFromDB
-        {
-            get { return allSparePartsFromDB; }
-            set
-            {
-                allSparePartsFromDB = value;
-                NotifyPropertyChanged("AllSparePartsFromDB");
-            }
-        }
-
-        private List<SparePart>? notValidSpareParts;
-        public List<SparePart> NotValidSpareParts
-        {
-            get { return notValidSpareParts; }
-            set
-            {
-                notValidSpareParts = value;
-                NotifyPropertyChanged("NotValidSpareParts");
-            }
-        }
-
-        private List<string>? notExistDBParts;
-        public List<string>? NotExistDBParts
-        {
-            get { return notExistDBParts; }
-            set
-            {
-                notExistDBParts = value;
-                NotifyPropertyChanged("NotExistDBParts");
-            }
-        }
-
-        private List<SparePart>? notExistPhotoFile;
-        public List<SparePart> NotExistPhotoFile
-        {
-            get { return notExistPhotoFile; }
-            set
-            {
-                notExistPhotoFile = value;
-                NotifyPropertyChanged("NotExistPhotoFile");
-            }
-        }
-
+        public static List<SparePart>? AllSparePartsFromDB;
+        public static List<SparePart>? NotValidSpareParts;
+        public static List<string>? NotExistDBParts;
+        public static List<SparePart>? NotExistPhotoFile;
 
         #endregion
 
@@ -80,16 +41,23 @@
         private void ValidationSpares()
         {
             var sListPart = GetInvoiceList();
+            if (sListPart.Count() == 1 && String.IsNullOrWhiteSpace(sListPart[0])) 
+            {
+                MessageBox.Show("Не введено значение");
+                return;
+            }
             AllSparePartsFromDB = Validator.GetSelectMaterial_by_name(sListPart);
-            NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDB);
-            NotExistDBParts = Validator.GetNotExistDBSpareParts(sListPart);
-            NotExistPhotoFile = Validator.GetSpare_NotExistPhotoFile(AllSparePartsFromDB);
-
-            if (!AllSparePartsFromDB.Any())
+            
+            if (AllSparePartsFromDB == null)
             {
                 MessageBox.Show("Проверьте ввод, по вашему запросу данных в базе нет");
                 return;
             }
+
+            NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDB);
+            NotExistDBParts = Validator.GetNotExistDBSpareParts(sListPart);
+            NotExistPhotoFile = Validator.GetSpare_NotExistPhotoFile(AllSparePartsFromDB);
+
 
             if (!NotValidSpareParts.Any() && !NotExistDBParts.Any())
             {
@@ -98,7 +66,6 @@
             }
             else
             {
-                ValidationSpares();
                 NokWindows nokWindows  = new NokWindows();
                 nokWindows.Show();
             }
@@ -125,13 +92,13 @@
 
             return partsList;
         }
-        private void NotifyPropertyChanged(String propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+        //private void NotifyPropertyChanged(String propertyName)
+        //{
+        //    if (PropertyChanged != null)
+        //    {
+        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        //    }
+        //}
         #endregion
 
     }

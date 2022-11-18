@@ -7,6 +7,10 @@ namespace Техописание_запчастей.Model
         public static List<SparePart> GetNotValidSpareParts(List<SparePart> parts)
         {
             List<SparePart> selectMaterial_by_null = new List<SparePart>();
+            if (parts == null)
+            {
+                return selectMaterial_by_null;
+            }
                 selectMaterial_by_null = parts.Where(x => x.Description == null || x.RusDescription == null || x.Unity == null || x.Photo == null).ToList();
             return selectMaterial_by_null;
         }
