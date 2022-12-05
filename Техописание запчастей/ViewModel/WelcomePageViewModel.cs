@@ -1,8 +1,6 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace Техописание_запчастей.ViewModel
+﻿namespace Техописание_запчастей.ViewModel
 {
-    class WelcomePageViewModel
+    class WelcomePageViewModel:INotifyPropertyChanged
     {
         #region Properties
         private string parts = String.Empty;
@@ -11,11 +9,7 @@ namespace Техописание_запчастей.ViewModel
             get { return parts; }
             set 
             {
-                //if (value != null)
-                //{
                    parts = value;
-                //    NotifyPropertyChanged("Parts");
-                //}
             }
         }
         public static List<SparePart>? AllSparePartsFromDB;
@@ -24,6 +18,7 @@ namespace Техописание_запчастей.ViewModel
         public static List<SparePart>? NotExistPhotoFile;
 
         #endregion
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         #region Command
         private RelayCommand? validationSpareParts;
@@ -81,7 +76,10 @@ namespace Техописание_запчастей.ViewModel
             {
                 foreach (var item in words)
                 {
-                   partsList.Add(item);
+                    if (item.Length>1)
+                    {
+                        partsList.Add(item);
+                    }
                 }
             }
             else
@@ -92,13 +90,13 @@ namespace Техописание_запчастей.ViewModel
 
             return partsList;
         }
-        //private void NotifyPropertyChanged(String propertyName)
-        //{
-        //    if (PropertyChanged != null)
-        //    {
-        //        PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        //    }
-        //}
+        private void NotifyPropertyChanged(String propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
         #endregion
 
     }
