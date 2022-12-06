@@ -6,20 +6,20 @@ namespace Техописание_запчастей.Model
 {
     public static class WordDocument
     {
-        private static object templateFile = Environment.CurrentDirectory + "\\Template_Description_Spare.docx";
-        private static Microsoft.Office.Interop.Word.Application word = new();
-        public static void CreateDescription(List<SparePart> spare_Parts)
+        private static object _templateFile = Environment.CurrentDirectory + "\\Template_Description_Spare.docx";
+        private static Microsoft.Office.Interop.Word.Application _word = new();
+        public static void CreateDescription(List<SparePart> spareParts)
         {
             try
             {
-                var doctemplate = word.Documents.Open(templateFile);
-                var docNew = word.Documents.Add();
+                var doctemplate = _word.Documents.Open(_templateFile);
+                var docNew = _word.Documents.Add();
                 var counter = 1;
                 //word.Visible = true;
-                foreach (var material in spare_Parts)
+                foreach (var material in spareParts)
                 {
                     Console.Clear();
-                    Console.WriteLine($" Обработка {counter} из {spare_Parts.Count}");
+                    Console.WriteLine($" Обработка {counter} из {spareParts.Count}");
                     counter++;
                     object missing = Type.Missing;
                     object what = WdGoToItem.wdGoToLine;
@@ -37,21 +37,21 @@ namespace Техописание_запчастей.Model
                 }
                 object newFileName = Path.Combine(Environment.CurrentDirectory, "Техописания_" + DateTime.Today.ToString("d")) + ".docx";
                 docNew.SaveAs2(newFileName);
-                word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+                _word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
                 docNew.Close(true);
                 doctemplate.Close(false);
-                word.Quit();
+                _word.Quit();
             }
             finally
             {
-                if (word != null)
+                if (_word != null)
                 {
-                    word.Quit();
+                    _word.Quit();
                 }
             }
         }
 
-        private static void ReplaceWord(string findword, string replaceword, ref Document doc)
+        private static void ReplaceWord(string findword, string? replaceword, ref Document doc)
         {
             object missing = Type.Missing;
             object wrap = WdFindWrap.wdFindContinue;
@@ -63,7 +63,7 @@ namespace Техописание_запчастей.Model
                 insertPhotoRange.Find.Execute(findword, false, false, false, missing, false, true, wrap, false, missing);
                 doc.Activate();
                 insertPhotoRange.Select();
-                var picture = word.Selection.InlineShapes.AddPicture(replaceword, Type.Missing, Type.Missing, Type.Missing);
+                var picture = _word.Selection.InlineShapes.AddPicture(replaceword, Type.Missing, Type.Missing, Type.Missing);
                 //picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;              
                 picture.Height = 320;
                 picture.Width = 380;

@@ -1,32 +1,31 @@
-﻿namespace Техописание_запчастей.ViewModel
+﻿using System.Collections.ObjectModel;
+
+namespace Техописание_запчастей.ViewModel
 {
     class WelcomePageViewModel:INotifyPropertyChanged
     {
         #region Properties
-        private string parts = String.Empty;
+        private string? _parts = String.Empty;
         public string? Parts
         {
-            get { return parts; }
-            set 
-            {
-                   parts = value;
-            }
+            get => _parts;
+            set => _parts = value;
         }
-        public static List<SparePart>? AllSparePartsFromDB;
-        public static List<SparePart>? NotValidSpareParts;
-        public static List<string>? NotExistDBParts;
+        public static List<SparePart>? AllSparePartsFromDb;
+        public static ObservableCollection<SparePart>? NotValidSpareParts;
+        public static List<string>? NotExistDbParts;
         public static List<SparePart>? NotExistPhotoFile;
 
         #endregion
         public event PropertyChangedEventHandler? PropertyChanged;
 
         #region Command
-        private RelayCommand? validationSpareParts;
+        private RelayCommand? _validationSpareParts;
         public RelayCommand ValidationSpareParts
         {
             get 
             { 
-                return validationSpareParts?? new RelayCommand(obj => { ValidationSpares();}); 
+                return _validationSpareParts?? new RelayCommand(obj => { ValidationSpares();}); 
             }
         }
         #endregion
@@ -41,20 +40,20 @@
                 MessageBox.Show("Не введено значение");
                 return;
             }
-            AllSparePartsFromDB = Validator.GetSelectMaterial_by_name(sListPart);
+            AllSparePartsFromDb = Validator.GetSelectMaterial_by_name(sListPart);
             
-            if (AllSparePartsFromDB == null)
+            if (AllSparePartsFromDb == null)
             {
                 MessageBox.Show("Проверьте ввод, по вашему запросу данных в базе нет");
                 return;
             }
 
-            NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDB);
-            NotExistDBParts = Validator.GetNotExistDBSpareParts(sListPart);
-            NotExistPhotoFile = Validator.GetSpare_NotExistPhotoFile(AllSparePartsFromDB);
+            NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDb);
+            NotExistDbParts = Validator.GetNotExistDbSpareParts(sListPart);
+            NotExistPhotoFile = Validator.GetSpare_NotExistPhotoFile(AllSparePartsFromDb);
 
 
-            if (!NotValidSpareParts.Any() && !NotExistDBParts.Any())
+            if (!NotValidSpareParts.Any() && !NotExistDbParts.Any())
             {
                 OkWindows okWindows = new OkWindows();
                 okWindows.Show();
@@ -65,13 +64,13 @@
                 nokWindows.Show();
             }
         }
-        private List<string> GetInvoiceList()
+        private List<string?> GetInvoiceList()
         {
-            List<string> partsList = new List<string>();
-            string list = parts.Replace(" ", "");
+            List<string?> partsList = new List<string?>();
+            string list = _parts.Replace(" ", "");
             list = list.Replace("\r", "");
 
-            string[] words = list.Split('\n');
+            string?[] words = list.Split('\n');
             if (words.Any())
             {
                 foreach (var item in words)
@@ -84,7 +83,7 @@
             }
             else
             {
-                partsList.Add(parts);
+                partsList.Add(_parts);
 
             }
 

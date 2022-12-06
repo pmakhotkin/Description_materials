@@ -1,71 +1,56 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 namespace Техописание_запчастей.ViewModel
 {
-    class NokWindowsViewModel:INotifyPropertyChanged
+    internal class NokWindowsViewModel:INotifyPropertyChanged
     {
         #region Properties
-        private List<SparePart>? allSparePartsFromDB;
-        public List<SparePart>? AllSparePartsFromDB
+        private List<SparePart>? _allSparePartsFromDb;
+        private List<SparePart>? AllSparePartsFromDb
         {
-            get { return allSparePartsFromDB; }
-            set
-            {
-                allSparePartsFromDB = value;
-                NotifyPropertyChanged("AllSparePartsFromDB");
-            }
+            get => _allSparePartsFromDb;
+            set => SetField(ref _allSparePartsFromDb, value);
+
+        }
+        public ObservableCollection<SparePart>? NotValidSpareParts { get; set; }
+        private SparePart _selectedMaterial;
+        public SparePart SelectedMaterial
+        {
+            get => _selectedMaterial;
+            set => SetField(ref _selectedMaterial, value);
         }
 
-        private List<SparePart>? notValidSpareParts;
-        public List<SparePart>? NotValidSpareParts
+        private List<string>? _notExistDbParts;
+        public List<string>? NotExistDbParts
         {
-            get { return notValidSpareParts; }
-            set
-            {
-                notValidSpareParts = value;
-                NotifyPropertyChanged("NotValidSpareParts");
-                OnPropertyChanged("NotValidSpareParts");
-            }
-        }
-
-        private List<string>? notExistDBParts;
-        public List<string>? NotExistDBParts
-        {
-            get { return notExistDBParts; }
-            set
-            {
-                notExistDBParts = value;
-                NotifyPropertyChanged("NotExistDBParts");
-            }
+            get => _notExistDbParts;
+            set => SetField(ref _notExistDbParts, value);
         }
         
-        private List<SparePart>? notExistPhotoFile;
+        private List<SparePart>? _notExistPhotoFile;
         public List<SparePart>? NotExistPhotoFile
         {
-            get { return notExistPhotoFile; }
-            set
-            {
-                notExistPhotoFile = value;
-                NotifyPropertyChanged("NotExistDBParts");
-            }
+            get => _notExistPhotoFile;
+            set => SetField(ref _notExistPhotoFile, value);
         }
 
         #endregion
         public NokWindowsViewModel() 
         {
-            AllSparePartsFromDB = WelcomePageViewModel.AllSparePartsFromDB;
+            AllSparePartsFromDb = WelcomePageViewModel.AllSparePartsFromDb;
             NotValidSpareParts = WelcomePageViewModel.NotValidSpareParts;
-            NotExistDBParts = WelcomePageViewModel.NotExistDBParts;
+            NotExistDbParts = WelcomePageViewModel.NotExistDbParts;
             NotExistPhotoFile = WelcomePageViewModel.NotExistPhotoFile;
         }
 
         #region Command
-        private RelayCommand? validationSpareParts;
+        private RelayCommand? _validationSpareParts;
         public RelayCommand ValidationSpareParts
         {
             get
             {
-                return validationSpareParts ?? new RelayCommand(obj => { RecheckValidation(); });
+                return _validationSpareParts ?? new RelayCommand(obj => { RecheckValidation(); });
             }
         }
         #endregion
@@ -77,19 +62,19 @@ namespace Техописание_запчастей.ViewModel
        }
         #endregion
 
-
         public event PropertyChangedEventHandler? PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private void NotifyPropertyChanged(String propertyName)
+
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 

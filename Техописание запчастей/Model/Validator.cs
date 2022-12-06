@@ -1,21 +1,24 @@
 ﻿
 
+using System.Collections.ObjectModel;
+
 namespace Техописание_запчастей.Model
 {
     public static class Validator
     {
-        public static List<SparePart> GetNotValidSpareParts(List<SparePart> parts)
+        public static ObservableCollection<SparePart> GetNotValidSpareParts(List<SparePart>? parts)
         {
-            List<SparePart> selectMaterial_by_null = new List<SparePart>();
+            var selectMaterialByNull = new ObservableCollection<SparePart>();
             if (parts == null)
             {
-                return selectMaterial_by_null;
+                return selectMaterialByNull;
             }
-                selectMaterial_by_null = parts.Where(x => x.Description == null || x.RusDescription == null || x.Unity == null || x.Photo == null).ToList();
-            return selectMaterial_by_null;
+            var selectMaterial = parts.Where(x => x.Description == null || x.RusDescription == null || x.Unity == null || x.Photo == null).ToList();
+            selectMaterialByNull = new ObservableCollection<SparePart>(selectMaterial);
+            return selectMaterialByNull;
         }
 
-        public static List<string> GetNotExistDBSpareParts(List<string> parts)
+        public static List<string?> GetNotExistDbSpareParts(List<string?> parts)
         {
             using (DeliveryContext db = new DeliveryContext())
             {
@@ -24,25 +27,25 @@ namespace Техописание_запчастей.Model
             return parts;
         }
 
-        public static List<SparePart> GetSelectMaterial_by_name(List<string> parts)
+        public static List<SparePart> GetSelectMaterial_by_name(List<string?> parts)
         {
-            List<SparePart> selectMaterial_by_name = new List<SparePart>();
+            List<SparePart> selectMaterialByName = new List<SparePart>();
             using (DeliveryContext db = new DeliveryContext())
             {
-                selectMaterial_by_name = db.SpareParts.Where(x => parts.Contains(x.Material)).ToList();
+                selectMaterialByName = db.SpareParts.Where(x => parts.Contains(x.Material)).ToList();
             }
-            return selectMaterial_by_name;
+            return selectMaterialByName;
         }
 
-        public static List<SparePart> GetSpare_NotExistPhotoFile(List<SparePart> ListLinkPhoto)
+        public static List<SparePart> GetSpare_NotExistPhotoFile(List<SparePart> listLinkPhoto)
         {
             List<SparePart> notExistPhoto = new List<SparePart>();
 
-            foreach (var Link in ListLinkPhoto)
+            foreach (var link in listLinkPhoto)
             {
-                if (!File.Exists(Link.Photo) && !String.IsNullOrEmpty(Link.Photo))
+                if (!File.Exists(link.Photo) && !String.IsNullOrEmpty(link.Photo))
                 {
-                    notExistPhoto.Add(Link);
+                    notExistPhoto.Add(link);
                 }
             }
 

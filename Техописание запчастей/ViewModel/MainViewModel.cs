@@ -2,15 +2,15 @@
 {
     public class MainViewModel
     {
-        private Page Welcome;
+        private Page _welcome;
         public Page CurrentPage { get; set; }
         public double FrameOpacity { get; set; }
 
         public MainViewModel()
         {
-            Welcome = new WelcomePage();
+            _welcome = new WelcomePage();
             FrameOpacity = 1;
-            CurrentPage = Welcome;
+            CurrentPage = _welcome;
         }
 
     }
