@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Техописание_запчастей.View"
         xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
         mc:Ignorable="d"
-        Title="Техописание запчастей" Height="450" Width="800">
+        Title="Техописание запчастей" Height="450" Width="250">
     <Window.DataContext>
         <vm:MainViewModel></vm:MainViewModel> 
     </Window.DataContext>
@@ -30,11 +30,12 @@
             Content="{Binding CurrentPage}"
             NavigationUIVisibility="Hidden"
             Opacity="{Binding FrameOpacity}"
+            HorizontalAlignment="Center"
             >
         </Frame>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Background="#94b4ff">
-            <StatusBar x:Name="textStatusbar"  Width="300" HorizontalAlignment="Left" Background="#94b4ff">Обработка..
-            <ProgressBar Width="100" Height="15" Value="67"/>
+            <StatusBar x:Name="textStatusbar" HorizontalAlignment="Left" Background="#94b4ff">Обработка..
+            <ProgressBar Width="70" Height="15" Value="67"/>
                 67 / 200
             </StatusBar>
         </StackPanel>

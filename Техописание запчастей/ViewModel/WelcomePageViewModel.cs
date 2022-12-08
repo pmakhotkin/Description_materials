@@ -17,17 +17,16 @@ namespace Техописание_запчастей.ViewModel
         public static List<SparePart>? NotExistPhotoFile;
 
         #endregion
+
+        public WelcomePageViewModel()
+        {
+            ValidationSpareParts = new BaseCommand(_ => true, _ => ValidationSpares());
+        }
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         #region Command
-        private RelayCommand? _validationSpareParts;
-        public RelayCommand ValidationSpareParts
-        {
-            get 
-            { 
-                return _validationSpareParts?? new RelayCommand(obj => { ValidationSpares();}); 
-            }
-        }
+        public BaseCommand ValidationSpareParts { get; set; }
         #endregion
 
         #region Metods

@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
+﻿
 
 namespace Техописание_запчастей.ViewModel
 {
@@ -42,41 +41,55 @@ namespace Техописание_запчастей.ViewModel
             NotValidSpareParts = WelcomePageViewModel.NotValidSpareParts;
             NotExistDbParts = WelcomePageViewModel.NotExistDbParts;
             NotExistPhotoFile = WelcomePageViewModel.NotExistPhotoFile;
+            ValidationSpareParts = new BaseCommand(_ => true, _=>RecheckValidation());
         }
 
         #region Command
-        private RelayCommand? _validationSpareParts;
-        public RelayCommand ValidationSpareParts
-        {
-            get
-            {
-                return _validationSpareParts ?? new RelayCommand(obj => { RecheckValidation(); });
-            }
-        }
+        public BaseCommand ValidationSpareParts { get; set; }
         #endregion
 
         #region Metods
-       public void RecheckValidation()
+       private void RecheckValidation()
        {
-           if (NotValidSpareParts != null && NotValidSpareParts.Any())
-           {
-               var pairs = from totalList in AllSparePartsFromDb
-                   join notValid in NotValidSpareParts.AsEnumerable()
-                       on totalList.Material equals notValid.Material
-                   select new { notValid, totalList };
-               foreach (var pair in pairs)
+           var forUpdateValue = new List<SparePart>();
+        
+               forUpdateValue.AddRange(NotValidSpareParts.Where(item => !string.IsNullOrWhiteSpace(item.Description)
+                                                                        && !string.IsNullOrWhiteSpace(item.RusDescription) 
+                                                                        && !string.IsNullOrWhiteSpace(item.Photo) 
+                                                                        && !string.IsNullOrWhiteSpace(item.Unity)));
+               if (forUpdateValue.Any())
                {
-                   pair.totalList.Description = pair.notValid.Description;
-                   pair.totalList.RusDescription = pair.notValid.RusDescription;
-                   pair.totalList.Photo = pair.notValid.Photo;
-                   pair.totalList.Unity = pair.notValid.Unity;
+                   foreach (var item in forUpdateValue)
+                   {
+                       NotValidSpareParts.Remove(item);
+                   }
+
+
+                   var pairs = from totalList in AllSparePartsFromDb
+                       join itemUpdate in forUpdateValue.AsEnumerable()
+                           on totalList.Material equals itemUpdate.Material
+                       select new { itemUpdate, totalList };
+
+                   foreach (var pair in pairs)
+                   {
+                       pair.totalList.Description = pair.itemUpdate.Description;
+                       pair.totalList.RusDescription = pair.itemUpdate.RusDescription;
+                       pair.totalList.Photo = pair.itemUpdate.Photo;
+                       pair.totalList.Unity = pair.itemUpdate.Unity;
+                   }
                }
-           }
-            
-           NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDb);
-           if (AllSparePartsFromDb != null) WordDocument.CreateDescription(AllSparePartsFromDb);
+
+               if (!NotValidSpareParts.Any())
+               {
+                   var okWindows = new OkWindows();
+                   okWindows.Show();
+               }
+               else
+               {
+                   MessageBox.Show("Заполните оставшиеся данные в первой таблице");
+               }
        }
-        #endregion
+       #endregion
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

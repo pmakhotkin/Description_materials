@@ -14,3 +14,5 @@ global using System.Linq;
 global using sys = System.Windows.Controls;
 global using wordApp = Microsoft.Office.Interop.Word;
 global using Validator = Техописание_запчастей.Model.Validator;
+global using System.Collections.ObjectModel;
+global using System.Runtime.CompilerServices;
