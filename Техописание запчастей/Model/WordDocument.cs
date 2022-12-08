@@ -17,8 +17,8 @@
                 //word.Visible = true;
                 foreach (var material in spareParts)
                 {
-                    Console.Clear();
-                    Console.WriteLine($" Обработка {counter} из {spareParts.Count}");
+                    //Console.Clear();
+                    //Console.WriteLine($" Обработка {counter} из {spareParts.Count}");
                     counter++;
                     object missing = Type.Missing;
                     object what = WdGoToItem.wdGoToLine;

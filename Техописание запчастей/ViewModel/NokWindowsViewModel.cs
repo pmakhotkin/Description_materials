@@ -74,7 +74,7 @@ namespace Техописание_запчастей.ViewModel
            }
             
            NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDb);
-           //if (AllSparePartsFromDb != null) WordDocument.CreateDescription(AllSparePartsFromDb);
+           if (AllSparePartsFromDb != null) WordDocument.CreateDescription(AllSparePartsFromDb);
        }
         #endregion
 
