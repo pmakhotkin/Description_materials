@@ -1,19 +1,18 @@
-﻿using Microsoft.Office.Interop.Word;
-using System.IO;
-using System.Threading;
-
-namespace Техописание_запчастей.Model
+﻿namespace Техописание_запчастей.Model
 {
     public static class WordDocument
     {
-        private static object _templateFile = Environment.CurrentDirectory + "\\Template_Description_Spare.docx";
-        private static Microsoft.Office.Interop.Word.Application _word = new();
+        private static readonly object
+            TemplateFile = Environment.CurrentDirectory + "\\Template_Description_Spare.docx";
+
+        private static readonly Microsoft.Office.Interop.Word.Application Word = new();
+
         public static void CreateDescription(List<SparePart> spareParts)
         {
             try
             {
-                var doctemplate = _word.Documents.Open(_templateFile);
-                var docNew = _word.Documents.Add();
+                var template = Word.Documents.Open(TemplateFile);
+                var docNew = Word.Documents.Add();
                 var counter = 1;
                 //word.Visible = true;
                 foreach (var material in spareParts)
@@ -25,7 +24,7 @@ namespace Техописание_запчастей.Model
                     object what = WdGoToItem.wdGoToLine;
                     object which = WdGoToDirection.wdGoToLast;
 
-                    doctemplate.Range(ref missing, ref missing).Copy();
+                    template.Range(ref missing, ref missing).Copy();
                     wordApp.Range endRange = docNew.GoTo(ref what, ref which, ref missing, ref missing);
                     endRange.Paste();
                     ReplaceWord("@unity", material.Unity, ref docNew);
@@ -33,21 +32,19 @@ namespace Техописание_запчастей.Model
                     ReplaceWord("@rus_description", material.RusDescription, ref docNew);
                     ReplaceWord("@description", material.Description, ref docNew);
                     ReplaceWord("@photo", material.Photo, ref docNew);
-
                 }
-                object newFileName = Path.Combine(Environment.CurrentDirectory, "Техописания_" + DateTime.Today.ToString("d")) + ".docx";
+
+                object newFileName =
+                    Path.Combine(Environment.CurrentDirectory, "Техописания_" + DateTime.Today.ToString("d")) + ".docx";
                 docNew.SaveAs2(newFileName);
-                _word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
+                Word.DisplayAlerts = WdAlertLevel.wdAlertsNone;
                 docNew.Close(true);
-                doctemplate.Close(false);
-                _word.Quit();
+                template.Close(false);
+                Word.Quit();
             }
             finally
             {
-                if (_word != null)
-                {
-                    _word.Quit();
-                }
+                Word.Quit();
             }
         }
 
@@ -60,10 +57,12 @@ namespace Техописание_запчастей.Model
             {
                 //word.Visible = true;
                 wordApp.Range insertPhotoRange = doc.Range();
-                insertPhotoRange.Find.Execute(findword, false, false, false, missing, false, true, wrap, false, missing);
+                insertPhotoRange.Find.Execute(findword, false, false, false, missing, false, true, wrap, false,
+                    missing);
                 doc.Activate();
                 insertPhotoRange.Select();
-                var picture = _word.Selection.InlineShapes.AddPicture(replaceword, Type.Missing, Type.Missing, Type.Missing);
+                var picture =
+                    Word.Selection.InlineShapes.AddPicture(replaceword, Type.Missing, Type.Missing, Type.Missing);
                 //picture.LockAspectRatio = Microsoft.Office.Core.MsoTriState.msoTrue;              
                 picture.Height = 320;
                 picture.Width = 380;
@@ -72,10 +71,12 @@ namespace Техописание_запчастей.Model
                 if (shape.Rotation != 0)
                 {
                     shape.Rotation = 0;
-
                 }
+
                 return;
-            };
+            }
+
+            ;
             Find find = doc.Range().Find;
             object replace = WdReplace.wdReplaceAll;
             find.Text = findword;

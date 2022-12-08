@@ -3,7 +3,7 @@
     /// <summary>
     /// Interaction logic for NokWindows.xaml
     /// </summary>
-    public partial class NokWindows : Window
+    public partial class NokWindows : System.Windows.Window
     {
         public NokWindows()
         {

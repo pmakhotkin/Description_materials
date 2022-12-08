@@ -6,23 +6,25 @@
         xmlns:local="clr-namespace:Техописание_запчастей.View"
         xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
         mc:Ignorable="d"
-        Title="NokWindows" Height="480" Width="1100">
+        Title="NokWindows" Height="550" Width="1100">
     <Window.DataContext>
         <vm:NokWindowsViewModel></vm:NokWindowsViewModel>
     </Window.DataContext>
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10" Width="1000">
-            <TextBlock Text="Запчасти с неполными данными :" Width="235" FontSize="14" Margin="0,5,0,0"/>
+            <TextBlock Text="Запчасти с неполными данными (заполните данные) :" Width="350" FontSize="14" Margin="0,5,0,0"/>
             <DataGrid 
-                ItemsSource="{Binding NotValidSpareParts}"
+                x:Name="DataGridNotValid"
+                ItemsSource="{Binding NotValidSpareParts ,Mode=TwoWay}"
                 SelectedItem="{Binding SelectedMaterial}"
                 Margin="5"
                 HorizontalScrollBarVisibility="Visible"
                 VerticalScrollBarVisibility="Auto"
-                Height="105"
+                Height="125"
                 HorizontalGridLinesBrush="LightGray"
                 AutoGenerateColumns="False"
                 AlternatingRowBackground="LightGray"
+                CanUserAddRows="False"
                 >
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -33,13 +35,16 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Наименование" Width="Auto" Binding="{Binding Material}"/>
+                    <DataGridTextColumn Header="Наименование" Width="Auto" IsReadOnly="True" Binding="{Binding Material}"/>
                     <DataGridTextColumn Header="Описание анг." Width="Auto"  Binding="{Binding Description}"/>
                     <DataGridTextColumn Header="Описание рус." Width="Auto" Binding="{Binding RusDescription}"/>
                     <DataGridTextColumn Header="Дивизион/Unity" Width="Auto" Binding="{Binding Unity}"/>
                     <DataGridTextColumn Header="Ссылка на фото" Width="Auto" Binding="{Binding Photo}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <!--<StackPanel DataContext="{Binding SelectedMaterial}">
+                <TextBox Text="{Binding Material}"></TextBox>
+            </StackPanel>-->
             <TextBlock Text="Запчасти которых нет в базе :" Width="190" FontSize="14" Margin="0,5,0,0"/>
             <ListBox ItemsSource="{Binding NotExistDbParts}" Margin="5" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="80" Width="200"></ListBox>
             <TextBlock Text="Запчасти с неверными ссылками на фото :" Width="277" FontSize="14" Margin="0,5,0,0"/>
@@ -52,6 +57,7 @@
                 HorizontalGridLinesBrush="LightGray"
                 AutoGenerateColumns="False"
                 AlternatingRowBackground="LightGray"
+                CanUserAddRows="False"
                 >
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -66,7 +72,7 @@
                     <DataGridTextColumn Header="Неверная ссылка" Width="*" Binding="{Binding Photo}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Width="300" Content="Создать техописания с учетом исправлений"/>
+            <Button Width="300" Content="Создать техописания с учетом исправлений" Command="{Binding ValidationSpareParts}"/>
             <TextBlock Margin="0,5,0,5">* ВНИМАНИЕ! техописания на запчасти из второй и третьей таблиц созданы не будут</TextBlock>
         </StackPanel>
 

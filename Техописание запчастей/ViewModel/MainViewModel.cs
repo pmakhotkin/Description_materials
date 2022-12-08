@@ -2,8 +2,8 @@
 {
     public class MainViewModel
     {
-        private Page _welcome;
-        public Page CurrentPage { get; set; }
+        private sys.Page _welcome;
+        public sys.Page CurrentPage { get; set; }
         public double FrameOpacity { get; set; }
 
         public MainViewModel()

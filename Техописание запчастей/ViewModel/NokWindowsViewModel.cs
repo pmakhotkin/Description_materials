@@ -56,9 +56,25 @@ namespace Техописание_запчастей.ViewModel
         #endregion
 
         #region Metods
-       public void RecheckValidation() 
+       public void RecheckValidation()
        {
-         
+           if (NotValidSpareParts != null && NotValidSpareParts.Any())
+           {
+               var pairs = from totalList in AllSparePartsFromDb
+                   join notValid in NotValidSpareParts.AsEnumerable()
+                       on totalList.Material equals notValid.Material
+                   select new { notValid, totalList };
+               foreach (var pair in pairs)
+               {
+                   pair.totalList.Description = pair.notValid.Description;
+                   pair.totalList.RusDescription = pair.notValid.RusDescription;
+                   pair.totalList.Photo = pair.notValid.Photo;
+                   pair.totalList.Unity = pair.notValid.Unity;
+               }
+           }
+            
+           NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDb);
+           //if (AllSparePartsFromDb != null) WordDocument.CreateDescription(AllSparePartsFromDb);
        }
         #endregion
 

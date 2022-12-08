@@ -17,7 +17,7 @@ namespace Техописание_запчастей.View
     /// <summary>
     /// Interaction logic for OkWindows.xaml
     /// </summary>
-    public partial class OkWindows : Window
+    public partial class OkWindows : System.Windows.Window
     {
         public OkWindows()
         {

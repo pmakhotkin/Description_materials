@@ -6,7 +6,7 @@ namespace Техописание_запчастей.View
     /// <summary>
     /// Interaction logic for WelcomePage.xaml
     /// </summary>
-    public partial class WelcomePage : Page
+    public partial class WelcomePage : sys.Page
     {
         public WelcomePage()
         {
