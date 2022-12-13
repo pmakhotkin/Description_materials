@@ -27,9 +27,9 @@ namespace Техописание_запчастей.Model
             return parts;
         }
 
-        public static List<SparePart> GetSelectMaterial_by_name(List<string?> parts)
+        public static List<SparePart>? GetSelectMaterial_by_name(List<string?> parts)
         {
-            List<SparePart> selectMaterialByName = new List<SparePart>();
+            List<SparePart> selectMaterialByName;
             using (DeliveryContext db = new DeliveryContext())
             {
                 selectMaterialByName = db.SpareParts.Where(x => parts.Contains(x.Material)).ToList();
@@ -37,7 +37,7 @@ namespace Техописание_запчастей.Model
             return selectMaterialByName;
         }
 
-        public static List<SparePart> GetSpare_NotExistPhotoFile(List<SparePart> listLinkPhoto)
+        public static List<SparePart>? GetSpare_NotExistPhotoFile(List<SparePart> listLinkPhoto)
         {
             List<SparePart> notExistPhoto = new List<SparePart>();
 

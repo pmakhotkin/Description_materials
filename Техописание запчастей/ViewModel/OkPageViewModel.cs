@@ -1,17 +1,17 @@
 namespace Техописание_запчастей.ViewModel;
 
-public class OkWindowsViewModel
+public class OkPageViewModel
 {
-    public OkWindowsViewModel()
+    public OkPageViewModel()
     {
         CreateDocs = new BaseCommand(_=>true,_=> CreateDoc());
     }
-
+    
     #region Command
     public BaseCommand CreateDocs { get; set; }
     #endregion
-    private static void CreateDoc()
+    public static void CreateDoc()
     {
-        if (WelcomePageViewModel.AllSparePartsFromDb != null) WordDocument.CreateDescription(WelcomePageViewModel.AllSparePartsFromDb);
+        if (MainViewModel.AllSparePartsFromDb != null) WordDocument.CreateDescription(MainViewModel.AllSparePartsFromDb);
     }
 }

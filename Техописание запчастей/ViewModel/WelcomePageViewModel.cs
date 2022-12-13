@@ -54,13 +54,13 @@ namespace Техописание_запчастей.ViewModel
 
             if (!NotValidSpareParts.Any() && !NotExistDbParts.Any())
             {
-                OkWindows okWindows = new OkWindows();
-                okWindows.Show();
+                //OkPage okWindows = new OkPage();
+                //okWindows.Show();
             }
             else
             {
-                NokWindows nokWindows  = new NokWindows();
-                nokWindows.Show();
+                //NokPage nokPage  = new NokPage();
+                //nokPage.Show();
             }
         }
         private List<string?> GetInvoiceList()

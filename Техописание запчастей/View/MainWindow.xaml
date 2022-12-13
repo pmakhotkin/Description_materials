@@ -3,17 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Техописание_запчастей.View"
         xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
         mc:Ignorable="d"
-        Title="Техописание запчастей" Height="450" Width="250">
+        Title="Техописание запчастей" Height="550" Width="1100">
     <Window.DataContext>
         <vm:MainViewModel></vm:MainViewModel> 
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="22"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Background="#94b4ff" BorderBrush="Black">
@@ -23,18 +22,34 @@
             <MenuItem Header="Обновить">
             </MenuItem>
         </Menu>
-        <Frame 
-            x:Name="MainFrame"
-            Grid.Row="1"
-            Background="White"
-            Content="{Binding CurrentPage}"
-            NavigationUIVisibility="Hidden"
-            Opacity="{Binding FrameOpacity}"
-            HorizontalAlignment="Center"
-            >
-        </Frame>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <TextBlock Margin="8" 
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                >Введите список запчастей по одной на строку :</TextBlock>
+                <TextBox x:Name="TextWaybill" 
+                         MinHeight="400"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         HorizontalScrollBarVisibility="Disabled"
+                         VerticalScrollBarVisibility="Auto"
+                         Text="{Binding Parts}"
+                ></TextBox>
+                <Button x:Name="BCheckData" FontSize="14" Content="Проверить запчасти" Height="30" Command="{Binding ValidationSpareParts}" ></Button>
+            </StackPanel>
+            <Frame Grid.Column="1"
+                   Margin="10,0,0,0"
+                   Content="{Binding CurrentPage}">
+            </Frame>
+        </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Background="#94b4ff">
-            <StatusBar x:Name="textStatusbar" HorizontalAlignment="Left" Background="#94b4ff">Обработка..
+            <StatusBar x:Name="TextStatusbar" HorizontalAlignment="Left" Background="#94b4ff" >Обработка..
             <ProgressBar Width="70" Height="15" Value="67"/>
                 67 / 200
             </StatusBar>

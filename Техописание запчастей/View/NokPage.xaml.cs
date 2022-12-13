@@ -1,11 +1,11 @@
 ﻿namespace Техописание_запчастей.View
 {
     /// <summary>
-    /// Interaction logic for NokWindows.xaml
+    /// Interaction logic for NokPage.xaml
     /// </summary>
-    public partial class NokWindows : System.Windows.Window
+    public partial class NokPage : sys.Page
     {
-        public NokWindows()
+        public NokPage()
         {
             InitializeComponent();
         }
