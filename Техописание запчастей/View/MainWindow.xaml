@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
         mc:Ignorable="d"
-        Title="Техописание запчастей" Height="550" Width="1100">
+        Title="Техописание запчастей" Height="550" Width="1100" 
+        Cursor="{Binding MainCursor}"
+        >
     <Window.DataContext>
         <vm:MainViewModel></vm:MainViewModel> 
     </Window.DataContext>
@@ -35,6 +37,7 @@
                 >Введите список запчастей по одной на строку :</TextBlock>
                 <TextBox x:Name="TextWaybill" 
                          MinHeight="400"
+                         MaxHeight="410"
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          HorizontalScrollBarVisibility="Disabled"
@@ -44,15 +47,13 @@
                 <Button x:Name="BCheckData" FontSize="14" Content="Проверить запчасти" Height="30" Command="{Binding ValidationSpareParts}" ></Button>
             </StackPanel>
             <Frame Grid.Column="1"
-                   Margin="10,0,0,0"
-                   Content="{Binding CurrentPage}">
+                   Margin="8,0,2,0"
+                   Content="{Binding CurrentPage}"
+                   NavigationUIVisibility="Hidden">
             </Frame>
         </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Background="#94b4ff">
-            <StatusBar x:Name="TextStatusbar" HorizontalAlignment="Left" Background="#94b4ff" >Обработка..
-            <ProgressBar Width="70" Height="15" Value="67"/>
-                67 / 200
-            </StatusBar>
+        
         </StackPanel>
     </Grid>
 </Window>

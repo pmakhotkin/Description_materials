@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:Техописание_запчастей.ViewModel"
         mc:Ignorable="d"
-        Title="OkPage" Height="150" Width="400">
+        Title="OkPage" Height="150" Width="400" 
+        Cursor="{Binding PageOkCursor}"
+        ShowsNavigationUI="False">
     <Page.DataContext>
         <vm:OkPageViewModel></vm:OkPageViewModel>
     </Page.DataContext>

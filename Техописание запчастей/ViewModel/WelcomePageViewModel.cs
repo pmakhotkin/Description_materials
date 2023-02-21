@@ -50,18 +50,6 @@ namespace Техописание_запчастей.ViewModel
             NotValidSpareParts = Validator.GetNotValidSpareParts(AllSparePartsFromDb);
             NotExistDbParts = Validator.GetNotExistDbSpareParts(sListPart);
             NotExistPhotoFile = Validator.GetSpare_NotExistPhotoFile(AllSparePartsFromDb);
-
-
-            if (!NotValidSpareParts.Any() && !NotExistDbParts.Any())
-            {
-                //OkPage okWindows = new OkPage();
-                //okWindows.Show();
-            }
-            else
-            {
-                //NokPage nokPage  = new NokPage();
-                //nokPage.Show();
-            }
         }
         private List<string?> GetInvoiceList()
         {

@@ -1,4 +1,5 @@
-﻿using Page = System.Windows.Controls.Page;
+﻿using System.Windows.Navigation;
+using Page = System.Windows.Controls.Page;
 
 namespace Техописание_запчастей.ViewModel
 {
@@ -29,6 +30,11 @@ namespace Техописание_запчастей.ViewModel
             get => _valueStatusBar;
             set => SetField(ref _valueStatusBar, value);
         }
+        private Cursor _maincursor = Cursors.Arrow;
+        public Cursor MainCursor 
+        { get => _maincursor;
+          set => SetField(ref _maincursor,value); 
+        }
         #endregion
         
         public MainViewModel()
@@ -44,6 +50,8 @@ namespace Техописание_запчастей.ViewModel
 
         private void ValidationSpares()
         {
+            //CurrentPage = new Page();
+            MainCursor = Cursors.Wait;
             var sListPart = GetInvoiceList();
             if (sListPart.Count() == 1 && String.IsNullOrWhiteSpace(sListPart[0])) 
             {
@@ -67,12 +75,15 @@ namespace Техописание_запчастей.ViewModel
             {
                 CurrentPage = null;
                 CurrentPage = new OkPage();
+                CurrentPage.ShowsNavigationUI = false;
             }
             else
             {
                 CurrentPage = null;
                 CurrentPage  = new NokPage();
+                CurrentPage.ShowsNavigationUI = false;
             }
+            MainCursor = Cursors.Arrow;
         }
         private List<string?> GetInvoiceList()
         {

@@ -5,20 +5,27 @@
         private static readonly object
             TemplateFile = Environment.CurrentDirectory + "\\Template_Description_Spare.docx";
 
-        private static readonly Microsoft.Office.Interop.Word.Application Word = new();
+        private static Microsoft.Office.Interop.Word.Application? Word = default;
 
         public static void CreateDescription(List<SparePart> spareParts)
         {
             try
             {
+                if (Word !=default)
+                {
+                    Word = default;
+                    Word = new();
+                }
+                else
+                {
+                    Word = new();
+                }
                 var template = Word.Documents.Open(TemplateFile);
                 var docNew = Word.Documents.Add();
                 var counter = 1;
                 //word.Visible = true;
                 foreach (var material in spareParts)
                 {
-                    //Console.Clear();
-                    //Console.WriteLine($" Обработка {counter} из {spareParts.Count}");
                     counter++;
                     object missing = Type.Missing;
                     object what = WdGoToItem.wdGoToLine;

@@ -88,7 +88,8 @@ internal class NokPageViewModel : INotifyPropertyChanged
             if (!NotValidSpareParts.Any())
             {
                 MessageBox.Show(("Данные прошли проверку, будут созданы техописания"));
-                OkPageViewModel.CreateDoc();
+                OkPageViewModel okPageViewModel = new OkPageViewModel();
+                okPageViewModel.CreateDoc();
             }
             else
             {
